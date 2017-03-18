@@ -7,21 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5280F2281E4183D600F8FBB3 /* TeamsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */; };
 		5295C85B1E4005E200ED05CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C85A1E4005E200ED05CB /* AppDelegate.swift */; };
-		5295C85D1E4005E200ED05CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C85C1E4005E200ED05CB /* ViewController.swift */; };
 		5295C8601E4005E200ED05CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5295C85E1E4005E200ED05CB /* Main.storyboard */; };
 		5295C8621E4005E200ED05CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8611E4005E200ED05CB /* Assets.xcassets */; };
 		5295C8651E4005E200ED05CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */; };
+		5295C86E1E40089400ED05CB /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C86D1E40089400ED05CB /* InitialViewController.swift */; };
+		5295C8701E401C5D00ED05CB /* HandicapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */; };
+		5295C8721E40273100ED05CB /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C8711E40273100ED05CB /* TextInputTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamsViewController.swift; sourceTree = "<group>"; };
 		5295C8571E4005E200ED05CB /* Captains Choice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Captains Choice.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5295C85A1E4005E200ED05CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5295C85C1E4005E200ED05CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5295C85F1E4005E200ED05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5295C8611E4005E200ED05CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5295C8641E4005E200ED05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5295C8661E4005E200ED05CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5295C86D1E40089400ED05CB /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandicapViewController.swift; sourceTree = "<group>"; };
+		5295C8711E40273100ED05CB /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +60,15 @@
 		5295C8591E4005E200ED05CB /* Captains Choice */ = {
 			isa = PBXGroup;
 			children = (
+				5295C86D1E40089400ED05CB /* InitialViewController.swift */,
 				5295C85A1E4005E200ED05CB /* AppDelegate.swift */,
-				5295C85C1E4005E200ED05CB /* ViewController.swift */,
 				5295C85E1E4005E200ED05CB /* Main.storyboard */,
 				5295C8611E4005E200ED05CB /* Assets.xcassets */,
 				5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */,
 				5295C8661E4005E200ED05CB /* Info.plist */,
+				5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */,
+				5295C8711E40273100ED05CB /* TextInputTableViewCell.swift */,
+				5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */,
 			);
 			path = "Captains Choice";
 			sourceTree = "<group>";
@@ -136,8 +145,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5295C85D1E4005E200ED05CB /* ViewController.swift in Sources */,
+				5295C86E1E40089400ED05CB /* InitialViewController.swift in Sources */,
 				5295C85B1E4005E200ED05CB /* AppDelegate.swift in Sources */,
+				5295C8701E401C5D00ED05CB /* HandicapViewController.swift in Sources */,
+				5280F2281E4183D600F8FBB3 /* TeamsViewController.swift in Sources */,
+				5295C8721E40273100ED05CB /* TextInputTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,6 +309,7 @@
 				5295C86B1E4005E200ED05CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

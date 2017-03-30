@@ -38,6 +38,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "TextInputCell") as! TextInputTableViewCell
         cell.NameTF.tag = cellCount
         cell.HandicapTF.tag = cellCount
+        cell.delegate = self
         cellCount += 1
         
         return cell
@@ -50,7 +51,6 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func GenerateButton(_ sender: Any) {
         let success = getTeamData()
-        
         
         if success {
             let teams = generateTeams()
@@ -77,22 +77,25 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         // choose teams
         var select = true
         var teams = [[(String, Int)]]()
-        var high = playerCount!
-        var i = 0
         
-        while i < high {
+        while playerList.count > 1 {
             var currentTeam = [(String, Int)]()
             for j in 0...playersPerTeam-1 {
-                if select {
-                    let person = (playerList[i + j], handicaps[playerList[i + j]]!)
+                if playerList.count == 1 {
+                    let person = (playerList[0], handicaps[playerList[0]]!)
                     currentTeam.append(person)
-                    i += 1
-                    select = false
                 } else {
-                    let person = (playerList[high - j], handicaps[playerList[high - j]]!)
-                    currentTeam.append(person)
-                    high -= 1
-                    select = true
+                    if select {
+                        let person = (playerList[0], handicaps[playerList[0]]!)
+                        currentTeam.append(person)
+                        playerList.remove(at: 0)
+                        select = false
+                    } else {
+                        let person = (playerList[playerList.count - 1], handicaps[playerList[playerList.count - 1]]!)
+                        currentTeam.append(person)
+                        playerList.remove(at: playerList.count - 1)
+                        select = true
+                    }
                 }
             }
             teams.append(currentTeam)
@@ -136,31 +139,50 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getTeamData() -> Bool {
-        var result = false
-        for i in 0...tableView.numberOfRows(inSection: 0)-1 {
-            let index = IndexPath(row: i, section: 0)
-            let cell: TextInputTableViewCell = self.tableView.cellForRow(at: index) as! TextInputTableViewCell
-            if let name = cell.NameTF.text, let playerHandicap = Int(cell.HandicapTF.text!), name != "" {
-                result = true
-                handicaps[name] = playerHandicap
-           } else {
-                let alertController = UIAlertController(title: "Enter all values", message: "Please enter a name (text) and handicap (number) for each player", preferredStyle: .alert)
-                
-                let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-                alertController.addAction(defaultAction)
-                
-                self.present(alertController, animated: true, completion: nil)
+        if cellInputs.count == playerCount {
+            for (tag, values) in cellInputs {
+                handicaps[values[0]] = Int(values[1])
             }
+            return true
         }
-        return result
+        
+        let alertController = UIAlertController(title: "Missing Values", message: "Please enter a name and handicap for each player.", preferredStyle: .alert)
+        
+        let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+        return false
     }
     
     func nameEntered(tag: Int, text: String) {
-        
+        if var cellInfo = cellInputs[tag] {
+            cellInfo[0] = text
+            cellInputs[tag] = cellInfo
+        } else  {
+            let cellInfo = [text, ""]
+            cellInputs[tag] = cellInfo
+        }
     }
     
     func handicapEntered(tag: Int, text: String) {
-        
+        if let handicapInt = Int(text) {
+            if var cellInfo = cellInputs[tag] {
+                cellInfo[1] = text
+                cellInputs[tag] = cellInfo
+            } else  {
+                let cellInfo = ["", text]
+                cellInputs[tag] = cellInfo
+            }
+        } else {
+            let alertController = UIAlertController(title: "Invalid Value", message: "Please enter only whole numbers as your handicap.", preferredStyle: .alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
 }

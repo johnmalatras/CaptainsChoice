@@ -37,18 +37,12 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamsCell")! as UITableViewCell
-        if indexPath.row == 0 {
-            let name = teams[indexPath.section][0].0
-            let handicap = String(teams[indexPath.section][0].1)
-            cell.textLabel?.text = name
-            cell.detailTextLabel?.text = handicap
-            
-        } else if indexPath.row == 1 {
-            let name = teams[indexPath.section][1].0
-            let handicap = String(teams[indexPath.section][1].1)
-            cell.textLabel?.text = name
-            cell.detailTextLabel?.text = handicap
-        }
+        let name = teams[indexPath.section][indexPath.row].0
+        let handicap = String(teams[indexPath.section][indexPath.row].1)
+        cell.textLabel?.text = name
+        cell.detailTextLabel?.text = handicap
+        
+
         
         return cell
     }

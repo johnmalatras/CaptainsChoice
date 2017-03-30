@@ -28,6 +28,9 @@ class TextInputTableViewCell: UITableViewCell {
     @IBAction func HandicapTextEntered(_ sender: UITextField) {
         delegate?.handicapEntered(tag: sender.tag, text: sender.text!)
     }
-    
+
+    @IBAction func HandicapTextChanged(_ sender: UITextField) {
+        delegate?.handicapEntered(tag: sender.tag, text: sender.text!)
+    }
 }
 

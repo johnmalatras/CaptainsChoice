@@ -8,21 +8,40 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 class HandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CustomDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var bannerView: GADBannerView!
+    
     var playerCount: Int!
     var playersPerTeam: Int!
     var handicaps = [String: Int]()
     var cellInputs = [Int: [String]]()
     var playerList = [String]()
     var cellCount = 0
+    var interstitial: GADInterstitial!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Captains Choice"
-        print(playerCount)
+        
+        bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
+        createAndLoadInterstitial()
+    }
+
+    
+    func showAd() {
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+        }
+        // Give user the option to start the next game.
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,6 +69,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     @IBAction func GenerateButton(_ sender: Any) {
+        showAd()
         let success = getTeamData()
         
         if success {
@@ -183,6 +203,15 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
             
             self.present(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func createAndLoadInterstitial() {
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-9379925034367531/3717275202")
+        let request = GADRequest()
+        // Request test ads on devices you specify. Your test device ID is printed to the console when
+        // an ad request is made.
+        //request.testDevices = [ kGADSimulatorID, "2077ef9a63d2b398840261c8221a0c9b" ]
+        interstitial.load(request)
     }
     
 }

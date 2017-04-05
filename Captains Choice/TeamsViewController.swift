@@ -8,14 +8,20 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
 
 class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    @IBOutlet weak var bannerView: GADBannerView!
     
     var teams = [[(String, Int)]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Captains Choice"
+        
+        bannerView.adUnitID = "ca-app-pub-9379925034367531/1043010402"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
     }
     
     override func didReceiveMemoryWarning() {

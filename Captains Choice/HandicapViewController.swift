@@ -31,7 +31,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         
-        createAndLoadInterstitial()
+        //createAndLoadInterstitial()
     }
 
     
@@ -69,7 +69,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     @IBAction func GenerateButton(_ sender: Any) {
-        showAd()
+        //showAd()
         let success = getTeamData()
         
         if success {

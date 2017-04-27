@@ -213,7 +213,7 @@
 				TargetAttributes = {
 					5295C8561E4005E200ED05CB = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 5HKM57D4VS;
+						DevelopmentTeam = UQ5A7GXJP2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -452,7 +452,7 @@
 			baseConfigurationReference = FA4CEA515EE6C11020E47837 /* Pods-Captains Choice.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5HKM57D4VS;
+				DEVELOPMENT_TEAM = UQ5A7GXJP2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Captains\\ Choice",
@@ -462,8 +462,9 @@
 					"$(PROJECT_DIR)/Captains\\ Choice",
 				);
 				INFOPLIST_FILE = "Captains Choice/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.malatras.Captains-Choice";
+				PRODUCT_BUNDLE_IDENTIFIER = com.malatras.CaptainsChoice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -474,7 +475,7 @@
 			baseConfigurationReference = B1A523B89D6216F42F3E834A /* Pods-Captains Choice.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5HKM57D4VS;
+				DEVELOPMENT_TEAM = UQ5A7GXJP2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Captains\\ Choice",
@@ -484,8 +485,9 @@
 					"$(PROJECT_DIR)/Captains\\ Choice",
 				);
 				INFOPLIST_FILE = "Captains Choice/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.malatras.Captains-Choice";
+				PRODUCT_BUNDLE_IDENTIFIER = com.malatras.CaptainsChoice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

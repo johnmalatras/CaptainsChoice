@@ -45,6 +45,9 @@ class InitialViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Captains Choice"
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+        
         bannerView.adUnitID = "ca-app-pub-9379925034367531/7089544002"
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
@@ -53,6 +56,10 @@ class InitialViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 
 }

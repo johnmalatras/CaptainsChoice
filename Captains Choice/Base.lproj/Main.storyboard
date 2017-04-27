@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4nT-1I-jbI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4nT-1I-jbI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,6 +25,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2qK-c5-rbf">
                                 <rect key="frame" x="93" y="292" width="189" height="51"/>
                                 <color key="backgroundColor" red="0.79758883248730961" green="0.79758883248730961" blue="0.79758883248730961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="51" id="gwz-Yi-Nbe"/>
+                                    <constraint firstAttribute="width" constant="189" id="mwI-p0-Sw9"/>
+                                </constraints>
                                 <state key="normal" title="Next">
                                     <color key="titleShadowColor" red="0.79145211859999998" green="0.88203125000000004" blue="0.86734871479999998" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -34,6 +38,10 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Players per Team:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65M-nv-YCi">
                                 <rect key="frame" x="16" y="221" width="220" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="EqF-7M-axw"/>
+                                    <constraint firstAttribute="width" constant="220" id="Thr-gx-dD3"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -51,7 +59,11 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Players:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cfa-nW-PN8">
-                                <rect key="frame" x="16" y="147" width="193" height="21"/>
+                                <rect key="frame" x="16" y="147" width="220" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="Y7j-ix-0l2"/>
+                                    <constraint firstAttribute="height" constant="21" id="xz1-ig-Yln"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -68,6 +80,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="5XW-5R-1N8" firstAttribute="top" secondItem="Du1-Ub-w8o" secondAttribute="bottom" constant="42" id="0mJ-gl-tt7"/>
+                            <constraint firstItem="2qK-c5-rbf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3m9-AX-40p"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Du1-Ub-w8o" secondAttribute="trailing" id="4LP-O1-IRD"/>
                             <constraint firstItem="65M-nv-YCi" firstAttribute="top" secondItem="Cfa-nW-PN8" secondAttribute="bottom" constant="53" id="5Kn-1k-fbQ"/>
                             <constraint firstItem="16D-fN-Nrl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5yf-5M-iDe"/>
@@ -87,7 +100,7 @@
                             <constraint firstItem="5XW-5R-1N8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="216" id="aBj-lS-Cvn"/>
                             <constraint firstItem="65M-nv-YCi" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="157" id="aph-n9-LxX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="65M-nv-YCi" secondAttribute="trailing" constant="123" id="cUO-ns-ORy"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Cfa-nW-PN8" secondAttribute="trailing" constant="150" id="i2l-LG-ClM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cfa-nW-PN8" secondAttribute="trailing" constant="123" id="i2l-LG-ClM"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="65M-nv-YCi" secondAttribute="bottom" constant="425" id="ipV-PV-rvx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5XW-5R-1N8" secondAttribute="trailing" id="jGK-9c-4md"/>
                             <constraint firstItem="2qK-c5-rbf" firstAttribute="top" secondItem="Du1-Ub-w8o" secondAttribute="bottom" constant="118" id="kU2-9r-34X"/>
@@ -124,6 +137,8 @@
                                 <color key="backgroundColor" red="0.79758883250000001" green="0.79758883250000001" blue="0.79758883250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="FAm-TM-Lat"/>
+                                    <constraint firstAttribute="width" constant="188" id="m8x-SJ-vGy"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="zsV-iL-bd9"/>
                                 </constraints>
                                 <state key="normal" title="Generate">
                                     <color key="titleShadowColor" red="0.79145211859999998" green="0.88203125000000004" blue="0.86734871479999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -230,6 +245,7 @@
                             <constraint firstItem="DRF-eD-Byr" firstAttribute="leading" secondItem="Ln8-Va-jfB" secondAttribute="leading" id="zWO-Ta-5h8"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="MHw-6U-cqv"/>
                     <connections>
                         <outlet property="bannerView" destination="flV-mg-gLT" id="r9W-5V-xYC"/>
                         <outlet property="tableView" destination="DRF-eD-Byr" id="Xe2-zX-bqv"/>
@@ -305,13 +321,14 @@
                             <constraint firstItem="g9J-Ia-o7g" firstAttribute="centerX" secondItem="6Ev-yv-pzA" secondAttribute="centerX" id="tVZ-br-rGW"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="7xg-Gc-Ypq"/>
                     <connections>
                         <outlet property="bannerView" destination="g9J-Ia-o7g" id="jj7-zF-F7W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LK0-wc-7cD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2885.5999999999999" y="353.9730134932534"/>
+            <point key="canvasLocation" x="2885.6000000000004" y="353.9730134932534"/>
         </scene>
         <!--Captains Choice-->
         <scene sceneID="Cak-xQ-Vdu">

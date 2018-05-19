@@ -8,40 +8,30 @@
 
 import Foundation
 import UIKit
-import GoogleMobileAds
+//import GoogleMobileAds
 
-class HandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CustomDelegate {
+class HandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var bannerView: GADBannerView!
+    //@IBOutlet weak var bannerView: GADBannerView!
+    @IBOutlet weak var HandicapTextField: UITextField!
+    @IBOutlet weak var NameTextField: UITextField!
+    @IBOutlet weak var TeamSizeControl: UISegmentedControl!
+    @IBOutlet weak var TeamTypeControl: UISegmentedControl!
     
-    var playerCount: Int!
-    var playersPerTeam: Int!
     var handicaps = [String: Int]()
-    var cellInputs = [Int: [String]]()
-    var playerList = [String]()
-    var cellCount = 0
-    var interstitial: GADInterstitial!
+    var players = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Captains Choice"
-        
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        /*
         bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
         bannerView.rootViewController = self
-        bannerView.load(GADRequest())
+        bannerView.load(GADRequest())*/
         
-        //createAndLoadInterstitial()
-    }
-
-    
-    func showAd() {
-        if interstitial.isReady {
-            interstitial.present(fromRootViewController: self)
-        } else {
-            print("Ad wasn't ready")
-        }
-        // Give user the option to start the next game.
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,16 +39,47 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func AddButton(_ sender: Any) {
+        insertNewPerson()
+    }
+    
+    func insertNewPerson() {
+        if NameTextField.text!.isEmpty && HandicapTextField.text!.isEmpty {
+            createAlert(title: "Error", message: "Please enter a name and handicap.")
+            return
+            
+        }
+        else if NameTextField.text!.isEmpty {
+            createAlert(title: "Error", message: "Please enter a name.")
+            return
+        }
+        else if HandicapTextField.text!.isEmpty {
+            createAlert(title: "Error", message: "Please enter a handicap.")
+            return
+        }
+        
+        players.append(NameTextField.text!)
+        handicaps[NameTextField.text!] = Int(HandicapTextField.text!)!
+        
+        let indexPath = IndexPath(row: players.count - 1, section: 0)
+        
+        tableView.beginUpdates()
+        tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        
+        NameTextField.text = ""
+        HandicapTextField.text = ""
+        view.endEditing(true)
+    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return playerCount
+        return handicaps.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TextInputCell") as! TextInputTableViewCell
-        cell.NameTF.tag = cellCount
-        cell.HandicapTF.tag = cellCount
-        cell.delegate = self
-        cellCount += 1
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PersonCell") as! PersonTableViewCell
+        cell.NameLabel.text = players[indexPath.row]
+        cell.HandicapLabel.text = String(handicaps[players[indexPath.row]]!)
         
         return cell
     }
@@ -66,152 +87,66 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
     
-    @IBAction func GenerateButton(_ sender: Any) {
-        //showAd()
-        let success = getTeamData()
+    
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
-        if success {
-            let teams = generateTeams()
+        if editingStyle == .delete {
+            handicaps.removeValue(forKey: players[indexPath.row])
+            players.remove(at: indexPath.row)
             
-            let svc = storyboard?.instantiateViewController(withIdentifier: "TeamsViewController") as! TeamsViewController
-            svc.teams = teams
-            navigationController?.pushViewController(svc, animated: true)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
         }
     }
     
-    //--- generate teams by quicksorting and then picking from opposite ends of pivot to create fairest teams ---//
-    func generateTeams() -> [[(String, Int)]] {
-        
-        // Find Total Mean Handicap
-        var totalHandicap = 0
-        for (player, handicap) in handicaps {
-            totalHandicap += handicap
-            playerList.append(player)
-        }
-        
-        // perform a quick sort on the handicap values
-        quickSort(low: 0, high: playerList.count - 1)
-        
-        // choose teams
-        var select = true
-        var teams = [[(String, Int)]]()
-        
-        while playerList.count > 1 {
-            var currentTeam = [(String, Int)]()
-            for j in 0...playersPerTeam-1 {
-                if playerList.count == 1 {
-                    let person = (playerList[0], handicaps[playerList[0]]!)
-                    currentTeam.append(person)
-                } else {
-                    if select {
-                        let person = (playerList[0], handicaps[playerList[0]]!)
-                        currentTeam.append(person)
-                        playerList.remove(at: 0)
-                        select = false
-                    } else {
-                        let person = (playerList[playerList.count - 1], handicaps[playerList[playerList.count - 1]]!)
-                        currentTeam.append(person)
-                        playerList.remove(at: playerList.count - 1)
-                        select = true
-                    }
-                }
-            }
-            teams.append(currentTeam)
-        }
-        
-        
-        return teams
-    }
-    
-    func quickSort(low: Int, high: Int) {
-        var i = low, j = high
-        let pivot = handicaps[playerList[low + (high-low)/2]]
-        
-        while i <= j {
-            while handicaps[playerList[i]]! < pivot! {
-                i += 1
-            }
-            while handicaps[playerList[j]]! > pivot! {
-                j -= 1
-            }
-            if i <= j {
-                exchange(i: i, j: j)
-                i += 1
-                j -= 1
-            }
-        }
-        
-        // Recursion
-        if low < j {
-            quickSort(low: low, high: j)
-        }
-        if i < high {
-            quickSort(low: i, high: high)
-        }
-    }
-    
-    func exchange (i: Int, j: Int) {
-        let temp = playerList[i]
-        playerList[i] = playerList[j]
-        playerList[j] = temp
-    }
-    
-    func getTeamData() -> Bool {
-        if cellInputs.count == playerCount {
-            for (tag, values) in cellInputs {
-                handicaps[values[0]] = Int(values[1])
-            }
-            return true
-        }
-        
-        let alertController = UIAlertController(title: "Missing Values", message: "Please enter a name and handicap for each player.", preferredStyle: .alert)
+    func createAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(defaultAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+
+    
+    @IBAction func GenerateButton(_ sender: Any) {
+        var teamSize : Int
+        switch TeamSizeControl.selectedSegmentIndex {
+        case 0:
+            teamSize = 2
+        case 1:
+            teamSize = 3
+        case 2:
+            teamSize = 4
+        default:
+            teamSize = 2
+        }
         
-        return false
-    }
-    
-    func nameEntered(tag: Int, text: String) {
-        if var cellInfo = cellInputs[tag] {
-            cellInfo[0] = text
-            cellInputs[tag] = cellInfo
-        } else  {
-            let cellInfo = [text, ""]
-            cellInputs[tag] = cellInfo
+        if players.count < teamSize {
+            createAlert(title: "Error", message: "Can't create teams of " + String(teamSize) + " with " + String(players.count) + " players")
+            return
         }
-    }
-    
-    func handicapEntered(tag: Int, text: String) {
-        if let handicapInt = Int(text) {
-            if var cellInfo = cellInputs[tag] {
-                cellInfo[1] = text
-                cellInputs[tag] = cellInfo
-            } else  {
-                let cellInfo = ["", text]
-                cellInputs[tag] = cellInfo
-            }
+        
+        var teams : [[(String, Int)]]
+        if TeamTypeControl.selectedSegmentIndex == 0 {
+            teams = TeamsHelper.generateFairestTeams(handicaps: handicaps, unsortedPlayers: players, teamSize: teamSize)
         } else {
-            let alertController = UIAlertController(title: "Invalid Value", message: "Please enter only whole numbers as your handicap.", preferredStyle: .alert)
-            
-            let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertController.addAction(defaultAction)
-            
-            self.present(alertController, animated: true, completion: nil)
+            teams = TeamsHelper.generateRandomTeams(handicaps: handicaps, players: players, teamSize: teamSize)
         }
+        
+        let svc = storyboard?.instantiateViewController(withIdentifier: "TeamsViewController") as! TeamsViewController
+        svc.teams = teams
+        navigationController?.pushViewController(svc, animated: true)
+
     }
     
-    func createAndLoadInterstitial() {
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-9379925034367531/3717275202")
-        let request = GADRequest()
-        // Request test ads on devices you specify. Your test device ID is printed to the console when
-        // an ad request is made.
-        //request.testDevices = [ kGADSimulatorID, "2077ef9a63d2b398840261c8221a0c9b" ]
-        interstitial.load(request)
-    }
-    
+   
 }

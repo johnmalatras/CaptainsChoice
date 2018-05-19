@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		35CBAFBE2F97FDAC238AC5AB /* libPods-Captains Choice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1332835125C8AE9204690865 /* libPods-Captains Choice.a */; };
+		52170E9520B07E7700059C9C /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52170E9420B07E7700059C9C /* PersonTableViewCell.swift */; };
+		52170E9720B08D7500059C9C /* TeamsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52170E9620B08D7500059C9C /* TeamsHelper.swift */; };
+		52170E9920B08EDC00059C9C /* CustomSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52170E9820B08EDC00059C9C /* CustomSort.swift */; };
 		525AD08E1E91DC0200CCD51B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 525AD08D1E91DC0200CCD51B /* GoogleService-Info.plist */; };
 		525B66111E9D752100291BF3 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 525B65FA1E9D752100291BF3 /* Contents.json */; };
 		525B66121E9D752100291BF3 /* Icon-App-20x20@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 525B65FB1E9D752100291BF3 /* Icon-App-20x20@1x.png */; };
@@ -37,13 +40,14 @@
 		5295C8601E4005E200ED05CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5295C85E1E4005E200ED05CB /* Main.storyboard */; };
 		5295C8621E4005E200ED05CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8611E4005E200ED05CB /* Assets.xcassets */; };
 		5295C8651E4005E200ED05CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */; };
-		5295C86E1E40089400ED05CB /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C86D1E40089400ED05CB /* InitialViewController.swift */; };
 		5295C8701E401C5D00ED05CB /* HandicapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */; };
-		5295C8721E40273100ED05CB /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C8711E40273100ED05CB /* TextInputTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1332835125C8AE9204690865 /* libPods-Captains Choice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Captains Choice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		52170E9420B07E7700059C9C /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
+		52170E9620B08D7500059C9C /* TeamsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsHelper.swift; sourceTree = "<group>"; };
+		52170E9820B08EDC00059C9C /* CustomSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSort.swift; sourceTree = "<group>"; };
 		525AD08D1E91DC0200CCD51B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		525B65FA1E9D752100291BF3 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
 		525B65FB1E9D752100291BF3 /* Icon-App-20x20@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-App-20x20@1x.png"; sourceTree = "<group>"; };
@@ -75,9 +79,7 @@
 		5295C8611E4005E200ED05CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5295C8641E4005E200ED05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5295C8661E4005E200ED05CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5295C86D1E40089400ED05CB /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandicapViewController.swift; sourceTree = "<group>"; };
-		5295C8711E40273100ED05CB /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
 		B1A523B89D6216F42F3E834A /* Pods-Captains Choice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Captains Choice.release.xcconfig"; path = "Pods/Target Support Files/Pods-Captains Choice/Pods-Captains Choice.release.xcconfig"; sourceTree = "<group>"; };
 		FA4CEA515EE6C11020E47837 /* Pods-Captains Choice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Captains Choice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Captains Choice/Pods-Captains Choice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,7 +157,6 @@
 			isa = PBXGroup;
 			children = (
 				525AD08D1E91DC0200CCD51B /* GoogleService-Info.plist */,
-				5295C86D1E40089400ED05CB /* InitialViewController.swift */,
 				5295C85A1E4005E200ED05CB /* AppDelegate.swift */,
 				5295C85E1E4005E200ED05CB /* Main.storyboard */,
 				5295C8611E4005E200ED05CB /* Assets.xcassets */,
@@ -163,8 +164,10 @@
 				5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */,
 				5295C8661E4005E200ED05CB /* Info.plist */,
 				5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */,
-				5295C8711E40273100ED05CB /* TextInputTableViewCell.swift */,
 				5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */,
+				52170E9420B07E7700059C9C /* PersonTableViewCell.swift */,
+				52170E9620B08D7500059C9C /* TeamsHelper.swift */,
+				52170E9820B08EDC00059C9C /* CustomSort.swift */,
 			);
 			path = "Captains Choice";
 			sourceTree = "<group>";
@@ -326,11 +329,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5295C86E1E40089400ED05CB /* InitialViewController.swift in Sources */,
+				52170E9520B07E7700059C9C /* PersonTableViewCell.swift in Sources */,
+				52170E9720B08D7500059C9C /* TeamsHelper.swift in Sources */,
+				52170E9920B08EDC00059C9C /* CustomSort.swift in Sources */,
 				5295C85B1E4005E200ED05CB /* AppDelegate.swift in Sources */,
 				5295C8701E401C5D00ED05CB /* HandicapViewController.swift in Sources */,
 				5280F2281E4183D600F8FBB3 /* TeamsViewController.swift in Sources */,
-				5295C8721E40273100ED05CB /* TextInputTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

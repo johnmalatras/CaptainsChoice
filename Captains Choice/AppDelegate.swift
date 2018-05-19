@@ -6,6 +6,7 @@
 //  Copyright © 2017 John Malatras. All rights reserved.
 //
 
+import QuartzCore
 import UIKit
 import Firebase
 
@@ -17,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FIRApp.configure()
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-9379925034367531~5612810809")
+        /*FIRApp.configure()
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-9379925034367531~5612810809")*/
         return true
     }
 

@@ -58,6 +58,11 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
         
+        if (handicaps[NameTextField.text!] != nil) {
+            createAlert(title: "Error", message: "Name already exists.")
+            return
+        }
+        
         players.append(NameTextField.text!)
         handicaps[NameTextField.text!] = Int(HandicapTextField.text!)!
         

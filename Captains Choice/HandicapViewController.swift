@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-//import GoogleMobileAds
+import GoogleMobileAds
+import Firebase
 
 class HandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,18 +21,47 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var TeamSizeControl: UISegmentedControl!
     @IBOutlet weak var TeamTypeControl: UISegmentedControl!
     
+    var bannerView: GADBannerView!
     var handicaps = [String: Int]()
     var players = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Captains Choice"
+        self.title = "Enter Players"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        /*
-        bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())*/
+        tableView.layer.borderWidth = 0.5
+        tableView.layer.borderColor = UIColor.black.cgColor
         
+        // In this case, we instantiate the banner with desired ad size.
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        addBannerViewToView(bannerView)
+        
+        bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
+        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" test ad
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
+    }
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
     }
     
     override func didReceiveMemoryWarning() {

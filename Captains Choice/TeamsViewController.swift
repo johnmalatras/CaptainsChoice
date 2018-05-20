@@ -8,20 +8,75 @@
 
 import Foundation
 import UIKit
+import GoogleMobileAds
+import Firebase
 
 class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
+    var bannerView: GADBannerView!
     var teams = [[(String, Int)]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Captains Choice"
+        self.title = "Result"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        /*
+        
+        // In this case, we instantiate the banner with desired ad size.
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        addBannerViewToView(bannerView)
+        
         bannerView.adUnitID = "ca-app-pub-9379925034367531/1043010402"
+        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" test ad
         bannerView.rootViewController = self
-        bannerView.load(GADRequest())*/
+        bannerView.load(GADRequest())
+    }
+    
+    @IBAction func ShareButton(_ sender: Any) {
+        shareTeams()
+    }
+    
+    func shareTeams() {
+        //Set the default sharing message.
+        let message = generateTeamsMessage()
+
+        let objectsToShare = [message]
+        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+        activityVC.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        self.present(activityVC, animated: true, completion: nil)
+    }
+    
+    func generateTeamsMessage() -> String{
+        var message = String()
+        for i in 0..<teams.count {
+            message += ("Team " + String(i+1) + ":\n")
+            for person in teams[i] {
+                message += ("\t - " + person.0 + "\n")
+            }
+        }
+        
+        return message
+    }
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
     }
     
     override func didReceiveMemoryWarning() {
@@ -34,7 +89,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Team: " + String(section+1)
+        return "Team " + String(section+1) + ":"
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

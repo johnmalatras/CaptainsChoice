@@ -174,7 +174,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         if TeamTypeControl.selectedSegmentIndex == 0 {
             teams = TeamsHelper.generateFairestTeams(handicaps: handicaps, unsortedPlayers: players, teamSize: teamSize)
         } else {
-            teams = TeamsHelper.generateRandomTeams(handicaps: handicaps, players: players, teamSize: teamSize)
+            teams = TeamsHelper.generateRandomTeams(handicaps: handicaps, origPlayers: players, teamSize: teamSize)
         }
         
         let svc = storyboard?.instantiateViewController(withIdentifier: "TeamsViewController") as! TeamsViewController

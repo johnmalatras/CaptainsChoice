@@ -10,8 +10,15 @@ import Foundation
 
 class TeamsHelper{
     
-    static func generateRandomTeams(handicaps: [String: Int], players: [String], teamSize: Int) -> [[(String, Int)]] {
+    static func generateRandomTeams(handicaps: [String: Int], origPlayers: [String], teamSize: Int) -> [[(String, Int)]] {
         var teams = [[(String, Int)]]()
+        var players = origPlayers
+        
+        var k = 0
+        while (players.count % teamSize != 0) {
+            players.append(players[k])
+            k += 1
+        }
         
         let randomizedPlayers = players.shuffled()
         let teamCount = players.count/teamSize
@@ -36,10 +43,10 @@ class TeamsHelper{
 
         var teams = [[(String, Int)]]()
 
-        var k = players.count-1
+        var k = 0
         while (players.count % teamSize != 0) {
             players.append(players[k])
-            k = k - 1
+            k += 1
         }
         
         let teamCount = players.count/teamSize

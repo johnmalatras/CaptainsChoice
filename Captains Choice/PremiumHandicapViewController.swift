@@ -1,17 +1,18 @@
 //
-//  HandicapViewController.swift
+//  PremiumHandicapViewController.swift
 //  Captains Choice
 //
-//  Created by John Malatras on 1/30/17.
-//  Copyright © 2017 John Malatras. All rights reserved.
+//  Created by John Malatras on 6/6/18.
+//  Copyright © 2018 John Malatras. All rights reserved.
 //
+
 
 import Foundation
 import UIKit
 import GoogleMobileAds
 import Firebase
 
-class HandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBOutlet weak var tableView: UITableView!
@@ -25,7 +26,6 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     var handicaps = [String: Int]()
     var players = [String]()
     let premiumIdentifier = "com.malatras.CaptainsChoice.premium"
-    typealias FinishedPurchase = () -> ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,39 +34,6 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.layer.borderWidth = 0.5
         tableView.layer.borderColor = UIColor.black.cgColor
         
-        // In this case, we instantiate the banner with desired ad size.
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        addBannerViewToView(bannerView)
-        
-        //bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(HandicapViewController.handlePurchaseNotification(_:)),
-                                               name: NSNotification.Name(rawValue: IAPHelper.IAPHelperPurchaseNotification),
-                                               object: nil)
-    }
-    
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints(
-            [NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: bottomLayoutGuide,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-            ])
     }
     
     override func didReceiveMemoryWarning() {
@@ -155,7 +122,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.present(alertController, animated: true, completion: nil)
     }
-
+    
     
     @IBAction func GenerateButton(_ sender: Any) {
         generateTeams()
@@ -190,32 +157,4 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         svc.teams = teams
         navigationController?.pushViewController(svc, animated: true)
     }
-    
-    @IBAction func BuyPremiumButton(_ sender: Any) {
-        buyPremium()
-    }
-    
-    func buyPremium() {
-        PremiumProduct.store.requestProducts{success, products in
-            if success {
-                let product = products![0]
-                PremiumProduct.store.buyProduct(product)
-            }
-        }
-    }
-
-    func segueToPremium() {
-        let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let nav = mainStoryboard.instantiateViewController(withIdentifier: "PremiumNavigationController") as! UINavigationController
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.window?.rootViewController = nav
-    }
-    
-    func handlePurchaseNotification(_ notification: Notification) {
-        segueToPremium()
-    }
-    
-    @IBAction func RestorePremiumButton(_ sender: Any) {
-    }
-    
 }

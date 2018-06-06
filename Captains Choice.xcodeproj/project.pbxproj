@@ -41,6 +41,10 @@
 		5295C8621E4005E200ED05CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8611E4005E200ED05CB /* Assets.xcassets */; };
 		5295C8651E4005E200ED05CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */; };
 		5295C8701E401C5D00ED05CB /* HandicapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */; };
+		52BB20EA20C862C700A33C5D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BB20E920C862C700A33C5D /* StoreKit.framework */; };
+		52BB20EC20C862D600A33C5D /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BB20EB20C862D600A33C5D /* IAPHelper.swift */; };
+		52BB20EE20C8731800A33C5D /* PremiumProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BB20ED20C8731800A33C5D /* PremiumProduct.swift */; };
+		52BB20F020C8764300A33C5D /* PremiumHandicapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BB20EF20C8764300A33C5D /* PremiumHandicapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +84,10 @@
 		5295C8641E4005E200ED05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5295C8661E4005E200ED05CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandicapViewController.swift; sourceTree = "<group>"; };
+		52BB20E920C862C700A33C5D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		52BB20EB20C862D600A33C5D /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		52BB20ED20C8731800A33C5D /* PremiumProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumProduct.swift; sourceTree = "<group>"; };
+		52BB20EF20C8764300A33C5D /* PremiumHandicapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumHandicapViewController.swift; sourceTree = "<group>"; };
 		B1A523B89D6216F42F3E834A /* Pods-Captains Choice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Captains Choice.release.xcconfig"; path = "Pods/Target Support Files/Pods-Captains Choice/Pods-Captains Choice.release.xcconfig"; sourceTree = "<group>"; };
 		FA4CEA515EE6C11020E47837 /* Pods-Captains Choice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Captains Choice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Captains Choice/Pods-Captains Choice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				35CBAFBE2F97FDAC238AC5AB /* libPods-Captains Choice.a in Frameworks */,
+				52BB20EA20C862C700A33C5D /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +108,7 @@
 		46C6F9AF89AE67108F1775C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				52BB20E920C862C700A33C5D /* StoreKit.framework */,
 				1332835125C8AE9204690865 /* libPods-Captains Choice.a */,
 			);
 			name = Frameworks;
@@ -156,6 +166,7 @@
 		5295C8591E4005E200ED05CB /* Captains Choice */ = {
 			isa = PBXGroup;
 			children = (
+				52BB20EB20C862D600A33C5D /* IAPHelper.swift */,
 				525AD08D1E91DC0200CCD51B /* GoogleService-Info.plist */,
 				5295C85A1E4005E200ED05CB /* AppDelegate.swift */,
 				5295C85E1E4005E200ED05CB /* Main.storyboard */,
@@ -164,10 +175,12 @@
 				5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */,
 				5295C8661E4005E200ED05CB /* Info.plist */,
 				5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */,
+				52BB20EF20C8764300A33C5D /* PremiumHandicapViewController.swift */,
 				5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */,
 				52170E9420B07E7700059C9C /* PersonTableViewCell.swift */,
 				52170E9620B08D7500059C9C /* TeamsHelper.swift */,
 				52170E9820B08EDC00059C9C /* CustomSort.swift */,
+				52BB20ED20C8731800A33C5D /* PremiumProduct.swift */,
 			);
 			path = "Captains Choice";
 			sourceTree = "<group>";
@@ -216,6 +229,11 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = UQ5A7GXJP2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -305,7 +323,10 @@
 				52170E9920B08EDC00059C9C /* CustomSort.swift in Sources */,
 				5295C85B1E4005E200ED05CB /* AppDelegate.swift in Sources */,
 				5295C8701E401C5D00ED05CB /* HandicapViewController.swift in Sources */,
+				52BB20F020C8764300A33C5D /* PremiumHandicapViewController.swift in Sources */,
+				52BB20EC20C862D600A33C5D /* IAPHelper.swift in Sources */,
 				5280F2281E4183D600F8FBB3 /* TeamsViewController.swift in Sources */,
+				52BB20EE20C8731800A33C5D /* PremiumProduct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

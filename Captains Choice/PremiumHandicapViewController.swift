@@ -11,12 +11,12 @@ import Foundation
 import UIKit
 import GoogleMobileAds
 import Firebase
+import CoreData
 
-class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, PassPlayerProtocol {
     
     
     @IBOutlet weak var tableView: UITableView!
-    //@IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var HandicapTextField: UITextField!
     @IBOutlet weak var NameTextField: UITextField!
     @IBOutlet weak var TeamSizeControl: UISegmentedControl!
@@ -25,7 +25,8 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
     var bannerView: GADBannerView!
     var handicaps = [String: Int]()
     var players = [String]()
-    let premiumIdentifier = "com.malatras.CaptainsChoice.premium"
+    var valueFromPlayerBook : [(String, Int)]?
+    var clicked = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,7 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         tableView.layer.borderWidth = 0.5
         tableView.layer.borderColor = UIColor.black.cgColor
         
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,11 +43,18 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func AddButton(_ sender: Any) {
-        insertNewPerson()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let playersToAdd = valueFromPlayerBook {
+            for player in playersToAdd {
+                insertNewPerson(name: player.0, handicap: player.1)
+            }
+        }
+        valueFromPlayerBook = nil
     }
     
-    func insertNewPerson() {
+    @IBAction func AddButton(_ sender: Any) {
         if NameTextField.text!.isEmpty && HandicapTextField.text!.isEmpty {
             createAlert(title: "Error", message: "Please enter a name and handicap.")
             return
@@ -60,13 +69,21 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
             return
         }
         
-        if (handicaps[NameTextField.text!] != nil) {
+        if let name = NameTextField.text, let handicap = Int(HandicapTextField.text!) {
+            insertNewPerson(name: name, handicap: handicap)
+        } else {
+            createAlert(title: "Error", message: "Invalid input.")
+        }
+    }
+    
+    func insertNewPerson(name: String, handicap: Int) {
+        if (handicaps[name] != nil) {
             createAlert(title: "Error", message: "Name already exists.")
             return
         }
         
-        players.append(NameTextField.text!)
-        handicaps[NameTextField.text!] = Int(HandicapTextField.text!)!
+        players.append(name)
+        handicaps[name] = handicap
         
         let indexPath = IndexPath(row: players.count - 1, section: 0)
         
@@ -149,12 +166,102 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         var teams : [[(String, Int)]]
         if TeamTypeControl.selectedSegmentIndex == 0 {
             teams = TeamsHelper.generateFairestTeams(handicaps: handicaps, unsortedPlayers: players, teamSize: teamSize)
+        }
+        else if TeamTypeControl.selectedSegmentIndex == 1 {
+            teams = TeamsHelper.generateFlightTeams(handicaps: handicaps, unsortedPlayers: players, teamSize: teamSize)
         } else {
             teams = TeamsHelper.generateRandomTeams(handicaps: handicaps, origPlayers: players, teamSize: teamSize)
         }
         
-        let svc = storyboard?.instantiateViewController(withIdentifier: "TeamsViewController") as! TeamsViewController
+        let svc = storyboard?.instantiateViewController(withIdentifier: "PremiumTeamsViewController") as! PremiumTeamsViewController
         svc.teams = teams
         navigationController?.pushViewController(svc, animated: true)
+    }
+    
+    @IBAction func SaveButton(_ sender: Any) {
+        savePlayer()
+    }
+    
+    func saveToDB(name: String, phoneNumber: String, handicap : Int, flight : String) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Players", in: context)
+        let player = NSManagedObject(entity: entity!, insertInto: context)
+        
+        player.setValue(name, forKey: "name")
+        player.setValue(handicap, forKey: "handicap")
+        player.setValue(phoneNumber, forKey: "phone")
+        player.setValue(flight, forKey: "flight")
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+            createAlert(title: "Error", message: "Couldn't save player information.")
+        }
+    }
+    
+    func savePlayer() {
+        let alertController = UIAlertController(title: "Enter Player Information", message: "Enter player name, phone number, handicap and flight.", preferredStyle: .alert)
+        
+        //the confirm action taking the inputs
+        let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
+            
+            //getting the input values from user
+            if let name = alertController.textFields?[0].text, let phoneNumber = alertController.textFields?[1].text, let handicap = Int((alertController.textFields?[2].text)!), let flight = alertController.textFields?[3].text {
+                self.saveToDB(name: name, phoneNumber: phoneNumber, handicap: handicap, flight: flight)
+                self.insertNewPerson(name: name, handicap: handicap)
+            } else {
+                self.createAlert(title: "Error", message: "Invalid input.")
+            }
+        }
+        
+        //the cancel action doing nothing
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        
+        //adding textfields to our dialog box
+        alertController.addTextField { (textField) in
+            if self.NameTextField.text == nil || self.NameTextField.text == "" {
+                textField.placeholder = "Name"
+            } else {
+                textField.text = self.NameTextField.text
+            }
+        }
+        alertController.addTextField { (textField) in
+            textField.keyboardType = .numberPad
+            textField.placeholder = "Phone Number"
+        }
+        alertController.addTextField { (textField) in
+            textField.keyboardType = .numberPad
+            if self.HandicapTextField.text == nil || self.HandicapTextField.text == "" {
+                textField.placeholder = "Handicap"
+            } else {
+                textField.text = self.HandicapTextField.text
+            }
+        }
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Flight"
+        }
+        
+        //adding the action to dialogbox
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        //finally presenting the dialog box
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func addNewPlayerFromBook(player: (String, Int)) {
+        if valueFromPlayerBook == nil {
+            valueFromPlayerBook = [(String, Int)]()
+        }
+        self.valueFromPlayerBook!.append(player)
+    }
+    
+    @IBAction func PlayerBookClicked(_ sender: Any) {
+        let playerBookController = self.storyboard?.instantiateViewController(withIdentifier: "PlayerBookViewController") as! PlayerBookViewController
+        playerBookController.delegate = self
+        playerBookController.clicked = clicked
+        self.navigationController?.pushViewController(playerBookController, animated: true)
     }
 }

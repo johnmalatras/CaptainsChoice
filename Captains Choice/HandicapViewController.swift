@@ -215,7 +215,4 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         segueToPremium()
     }
     
-    @IBAction func RestorePremiumButton(_ sender: Any) {
-    }
-    
 }

@@ -26,8 +26,8 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         addBannerViewToView(bannerView)
         
-        //bannerView.adUnitID = "ca-app-pub-9379925034367531/1043010402"
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
+        bannerView.adUnitID = "ca-app-pub-9379925034367531/1043010402"
+        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
     }
@@ -51,7 +51,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         for i in 0..<teams.count {
             message += ("Team " + String(i+1) + ":\n")
             for person in teams[i] {
-                message += ("\t - " + person.0 + "\n")
+                message += ("\t - " + person.0 + ", " + String(person.1) + "\n")
             }
         }
         

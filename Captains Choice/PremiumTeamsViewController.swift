@@ -39,7 +39,7 @@ class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITable
         for i in 0..<teams.count {
             message += ("Team " + String(i+1) + ":\n")
             for person in teams[i] {
-                message += ("\t - " + person.0 + "\n")
+                message += ("\t - " + person.0 + ", " + String(person.1) + "\n")
             }
         }
         

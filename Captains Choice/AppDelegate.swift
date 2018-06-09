@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FIRApp.configure()
         GADMobileAds.configure(withApplicationID: "ca-app-pub-9379925034367531~5612810809")
-        /*
+        
         let premiumIdentifier = "com.malatras.CaptainsChoice.premium"
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
-        */
+        
         return true
     }
 

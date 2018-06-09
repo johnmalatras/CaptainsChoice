@@ -38,8 +38,8 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         addBannerViewToView(bannerView)
         
-        //bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
+        bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
+        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         

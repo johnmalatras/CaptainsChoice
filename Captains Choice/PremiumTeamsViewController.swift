@@ -13,6 +13,7 @@ class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet weak var tableView: UITableView!
     
     var teams = [[(String, Int)]]()
+    var averageHandicaps = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,7 @@ class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Team " + String(section+1) + ":"
+        return "Team " + String(section+1) + " (avg handicap = " + String(averageHandicaps[section]) + "):"
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

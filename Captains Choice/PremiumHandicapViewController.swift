@@ -175,7 +175,21 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         
         let svc = storyboard?.instantiateViewController(withIdentifier: "PremiumTeamsViewController") as! PremiumTeamsViewController
         svc.teams = teams
+        svc.averageHandicaps = calculateAverageHandicaps(teams: teams)
         navigationController?.pushViewController(svc, animated: true)
+    }
+    
+    func calculateAverageHandicaps(teams : [[(String, Int)]]) -> [Int] {
+        var averageHandicaps = [Int]()
+        for i in 0..<teams.count {
+            var total = 0
+            for player in teams[i] {
+                total += player.1
+            }
+            averageHandicaps.append(total/teams[i].count)
+        }
+        
+        return averageHandicaps
     }
     
     @IBAction func SaveButton(_ sender: Any) {

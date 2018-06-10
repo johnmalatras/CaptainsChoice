@@ -16,12 +16,13 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     var bannerView: GADBannerView!
     var teams = [[(String, Int)]]()
+    var averageHandicaps = [Int]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Result"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
+                
         // In this case, we instantiate the banner with desired ad size.
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         addBannerViewToView(bannerView)
@@ -89,7 +90,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Team " + String(section+1) + ":"
+        return "Team " + String(section+1) + " (avg handicap = " + String(averageHandicaps[section]) + "):"
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

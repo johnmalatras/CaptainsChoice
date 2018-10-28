@@ -34,8 +34,38 @@ class TeamsHelper{
         return teams
     }
     
-    //--
     static func generateFairestTeams(handicaps: [String: Int], unsortedPlayers: [String], teamSize: Int) -> [[(String, Int)]] {
+        let customSort = CustomSort(handicaps: handicaps, players: unsortedPlayers)
+        var players = customSort.sortPlayers()
+        
+        var teams = [[(String, Int)]]()
+        
+        var k = 0
+        while (players.count % teamSize != 0) {
+            players.append(players[k])
+            k += 1
+        }
+        
+        let numberOfTeams = (players.count / teamSize == 1) ? players.count : players.count / teamSize
+        var i = 0
+        while i < players.count && i < numberOfTeams {
+            teams.append([(String, Int)]())
+            teams[i].append((players[i], handicaps[players[i]]!))
+            i += 1
+        }
+        
+        var j = players.count - 1
+        while i <= j {
+            let addPosition = (numberOfTeams-1)-(j%numberOfTeams)
+            teams[addPosition].append((players[j], handicaps[players[j]]!))
+            j -= 1
+        }
+        
+        return teams
+    }
+    
+    //--
+    static func generateFlightTeams(handicaps: [String: Int], unsortedPlayers: [String], teamSize: Int) -> [[(String, Int)]] {
         
         // sort handicap values
         let customSort = CustomSort(handicaps: handicaps, players: unsortedPlayers)

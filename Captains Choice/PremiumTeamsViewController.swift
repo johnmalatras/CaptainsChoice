@@ -1,20 +1,17 @@
 //
-//  TeamsViewController.swift
+//  PremiumTeamsViewController.swift
 //  Captains Choice
 //
-//  Created by John Malatras on 1/31/17.
-//  Copyright © 2017 John Malatras. All rights reserved.
+//  Created by John Malatras on 6/8/18.
+//  Copyright © 2018 John Malatras. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import GoogleMobileAds
-import Firebase
 
-class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
-    var bannerView: GADBannerView!
     var teams = [[(String, Int)]]()
     var averageHandicaps = [Int]()
     
@@ -22,15 +19,6 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         self.title = "Result"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-                
-        // In this case, we instantiate the banner with desired ad size.
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        addBannerViewToView(bannerView)
-        
-        bannerView.adUnitID = "ca-app-pub-9379925034367531/1043010402"
-        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
     }
     
     @IBAction func ShareButton(_ sender: Any) {
@@ -40,7 +28,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func shareTeams() {
         //Set the default sharing message.
         let message = generateTeamsMessage()
-
+        
         let objectsToShare = [message]
         let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
@@ -57,27 +45,6 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         return message
-    }
-    
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints(
-            [NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: bottomLayoutGuide,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-            ])
     }
     
     override func didReceiveMemoryWarning() {
@@ -104,10 +71,8 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         cell.textLabel?.text = name
         cell.detailTextLabel?.text = handicap
         
-
+        
         
         return cell
     }
-    
-    
 }

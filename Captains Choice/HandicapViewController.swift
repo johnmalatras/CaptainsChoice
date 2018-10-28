@@ -24,6 +24,8 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     var bannerView: GADBannerView!
     var handicaps = [String: Int]()
     var players = [String]()
+    let premiumIdentifier = "com.malatras.CaptainsChoice.premium"
+    typealias FinishedPurchase = () -> ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +39,13 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         addBannerViewToView(bannerView)
         
         bannerView.adUnitID = "ca-app-pub-9379925034367531/8566277200"
-        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" test ad
+        //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
         
+        NotificationCenter.default.addObserver(self, selector: #selector(HandicapViewController.handlePurchaseNotification(_:)),
+                                               name: NSNotification.Name(rawValue: IAPHelper.IAPHelperPurchaseNotification),
+                                               object: nil)
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -153,6 +158,10 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
 
     
     @IBAction func GenerateButton(_ sender: Any) {
+        generateTeams()
+    }
+    
+    func generateTeams() {
         var teamSize : Int
         switch TeamSizeControl.selectedSegmentIndex {
         case 0:
@@ -179,9 +188,45 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         
         let svc = storyboard?.instantiateViewController(withIdentifier: "TeamsViewController") as! TeamsViewController
         svc.teams = teams
+        svc.averageHandicaps = calculateAverageHandicaps(teams: teams)
         navigationController?.pushViewController(svc, animated: true)
-
     }
     
-   
+    func calculateAverageHandicaps(teams : [[(String, Int)]]) -> [Int] {
+        var averageHandicaps = [Int]()
+        for i in 0..<teams.count {
+            var total = 0
+            for player in teams[i] {
+                total += player.1
+            }
+            averageHandicaps.append(total/teams[i].count)
+        }
+        
+        return averageHandicaps
+    }
+    
+    @IBAction func BuyPremiumButton(_ sender: Any) {
+        buyPremium()
+    }
+    
+    func buyPremium() {
+        PremiumProduct.store.requestProducts{success, products in
+            if success {
+                let product = products![0]
+                PremiumProduct.store.buyProduct(product)
+            }
+        }
+    }
+
+    func segueToPremium() {
+        let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let nav = mainStoryboard.instantiateViewController(withIdentifier: "PremiumNavigationController") as! UINavigationController
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = nav
+    }
+    
+    func handlePurchaseNotification(_ notification: Notification) {
+        segueToPremium()
+    }
+    
 }

@@ -43,6 +43,7 @@
 		5295C8621E4005E200ED05CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8611E4005E200ED05CB /* Assets.xcassets */; };
 		5295C8651E4005E200ED05CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */; };
 		5295C8701E401C5D00ED05CB /* HandicapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */; };
+		52A7ADC521A0ADFD00F33532 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A7ADC421A0ADFD00F33532 /* Player.swift */; };
 		52BB20EA20C862C700A33C5D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BB20E920C862C700A33C5D /* StoreKit.framework */; };
 		52BB20EC20C862D600A33C5D /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BB20EB20C862D600A33C5D /* IAPHelper.swift */; };
 		52BB20EE20C8731800A33C5D /* PremiumProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BB20ED20C8731800A33C5D /* PremiumProduct.swift */; };
@@ -91,6 +92,7 @@
 		5295C8641E4005E200ED05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5295C8661E4005E200ED05CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandicapViewController.swift; sourceTree = "<group>"; };
+		52A7ADC421A0ADFD00F33532 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		52BB20E920C862C700A33C5D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		52BB20EB20C862D600A33C5D /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		52BB20ED20C8731800A33C5D /* PremiumProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumProduct.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				52D52F7020CB1B6200130E80 /* PlayerBookCell.swift */,
 				525E12DD20CB5C8900F217D1 /* HeaderCell.swift */,
 				525E12DF20CB82CD00F217D1 /* PremiumTeamsViewController.swift */,
+				52A7ADC421A0ADFD00F33532 /* Player.swift */,
 			);
 			path = "Captains Choice";
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				5280F2281E4183D600F8FBB3 /* TeamsViewController.swift in Sources */,
 				52BB20EE20C8731800A33C5D /* PremiumProduct.swift in Sources */,
 				525E12E020CB82CD00F217D1 /* PremiumTeamsViewController.swift in Sources */,
+				52A7ADC521A0ADFD00F33532 /* Player.swift in Sources */,
 				52D52F7120CB1B6200130E80 /* PlayerBookCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,10 +17,11 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var bannerView: GADBannerView!
     var teams = [[(String, Int)]]()
     var averageHandicaps = [Int]()
+    var genType: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Result"
+        self.title = genType + " Generation Result"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
                 
         // In this case, we instantiate the banner with desired ad size.

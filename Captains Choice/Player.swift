@@ -10,7 +10,7 @@ import Foundation
 
 struct Player {
     var name: String
-    var flight: String
-    var phoneNumber: String
+    var flight: String?
+    var phoneNumber: String?
     var handicap: Int16
 }

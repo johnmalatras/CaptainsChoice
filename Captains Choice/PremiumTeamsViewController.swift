@@ -8,16 +8,19 @@
 
 import Foundation
 import UIKit
+import MessageUI
 
-class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     var teams = [[(String, Int)]]()
     var averageHandicaps = [Int]()
+    var genType: String!
+    var players: [String: Player]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Result"
+        self.title = genType + " Generation Result"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
@@ -29,16 +32,30 @@ class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITable
         //Set the default sharing message.
         let message = generateTeamsMessage()
         
-        let objectsToShare = [message]
-        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-        activityVC.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-        self.present(activityVC, animated: true, completion: nil)
+        var phoneNumbers = [String]()
+        for (_, player) in players {
+            if let phoneNumber = player.phoneNumber {
+                phoneNumbers.append(phoneNumber)
+            }
+        }
+        
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
+        
+        // Configure the fields of the interface.
+        composeVC.recipients = phoneNumbers
+        composeVC.body = message
+        
+        // Present the view controller modally.
+        if MFMessageComposeViewController.canSendText() {
+            self.present(composeVC, animated: true, completion: nil)
+        }
     }
     
     func generateTeamsMessage() -> String{
         var message = String()
         for i in 0..<teams.count {
-            message += ("Team " + String(i+1) + ":\n")
+            message += ("Team " + String(i+1) + " (Avg Handicap = " + String(averageHandicaps[i]) + ")" + ":\n")
             for person in teams[i] {
                 message += ("\t - " + person.0 + ", " + String(person.1) + "\n")
             }
@@ -74,5 +91,8 @@ class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITable
         
         
         return cell
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
     }
 }

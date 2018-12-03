@@ -30,7 +30,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillDisappear(_ animated : Bool) {
         super.viewWillDisappear(animated)
         
-        if self.isMovingFromParentViewController {
+        if self.isMovingFromParent {
             delegate?.clicked = clicked
         }
     }
@@ -73,7 +73,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
             let result = try context.fetch(request)
             players.removeAll()
             for data in result as! [NSManagedObject] {
-                players.append(Player(name: data.value(forKey: "name") as! String, flight: data.value(forKey: "flight") as! String, phoneNumber: data.value(forKey: "phone") as! String, handicap: Int16(data.value(forKey: "handicap") as! Int)))
+                players.append(Player(name: data.value(forKey: "name") as! String, flight: data.value(forKey: "flight") as? String, phoneNumber: data.value(forKey: "phone") as? String, handicap: Int16(data.value(forKey: "handicap") as! Int)))
             }
             
         } catch {
@@ -107,7 +107,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         return cell
     }
     
-    func editPlayer(sender: UIButton) {
+    @objc func editPlayer(sender: UIButton) {
         let alertController = UIAlertController(title: "Update Player Information", message: "Enter player name, phone number, handicap and flight.", preferredStyle: .alert)
         
         let selectedPlayer = players[sender.tag]
@@ -134,7 +134,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
                     print("phone flag")
                     self.createAlert(title: "Error", message: "Invalid input.")
                 }
-                phoneNumber = selectedPlayer.phoneNumber
+                phoneNumber = selectedPlayer.phoneNumber!
             }
             
             var handicap: Int
@@ -156,7 +156,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
                     print("flight flag")
                     self.createAlert(title: "Error", message: "Invalid input.")
                 }
-                flight = selectedPlayer.flight
+                flight = selectedPlayer.flight!
             }
             
             self.updatePlayerData(player: selectedPlayer, newName: name, newHandicap: handicap, newFlight: flight, newPhone: phoneNumber)
@@ -180,7 +180,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
             textField.placeholder = "Handicap: " + String(selectedPlayer.handicap)
         }
         alertController.addTextField { (textField) in
-            textField.placeholder = "Flight: " + selectedPlayer.flight
+            textField.placeholder = "Flight: " + selectedPlayer.flight!
         }
         
         //adding the action to dialogbox
@@ -191,8 +191,8 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func addPlayerToCurrent(sender: UIButton) {
-        delegate?.addNewPlayerFromBook(player: (players[sender.tag].name, Int(players[sender.tag].handicap)))
+    @objc func addPlayerToCurrent(sender: UIButton) {
+        delegate?.addNewPlayerFromBook(player: players[sender.tag])
         
         clicked.append(sender.tag)
         tableView.reloadData()
@@ -232,7 +232,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func savePlayer() {
+    @objc func savePlayer() {
         let alertController = UIAlertController(title: "Enter Player Information", message: "Enter player name, phone number, handicap and flight.", preferredStyle: .alert)
         
         //the confirm action taking the inputs
@@ -253,6 +253,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         
         //adding textfields to our dialog box
         alertController.addTextField { (textField) in
+            textField.autocapitalizationType = UITextAutocapitalizationType.words
             textField.placeholder = "Name"
         }
         alertController.addTextField { (textField) in
@@ -288,5 +289,5 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
 }
 
 protocol PassPlayerProtocol {
-    func addNewPlayerFromBook(player: (String, Int))
+    func addNewPlayerFromBook(player: Player)
 }

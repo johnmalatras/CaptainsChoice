@@ -32,7 +32,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         self.title = "Enter Players"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.layer.borderWidth = 0.5
-        tableView.layer.borderColor = UIColor.black.cgColor
+        tableView.layer.borderColor = UIColor.gray.cgColor
         
         // In this case, we instantiate the banner with desired ad size.
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
@@ -135,7 +135,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             handicaps.removeValue(forKey: players[indexPath.row])
@@ -180,15 +180,19 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         var teams : [[(String, Int)]]
+        var genType: String
         if TeamTypeControl.selectedSegmentIndex == 0 {
+            genType = "Fairest"
             teams = TeamsHelper.generateFairestTeams(handicaps: handicaps, unsortedPlayers: players, teamSize: teamSize)
         } else {
+            genType = "Flight"
             teams = TeamsHelper.generateRandomTeams(handicaps: handicaps, origPlayers: players, teamSize: teamSize)
         }
         
         let svc = storyboard?.instantiateViewController(withIdentifier: "TeamsViewController") as! TeamsViewController
         svc.teams = teams
         svc.averageHandicaps = calculateAverageHandicaps(teams: teams)
+        svc.genType = genType
         navigationController?.pushViewController(svc, animated: true)
     }
     
@@ -225,7 +229,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         appDelegate.window?.rootViewController = nav
     }
     
-    func handlePurchaseNotification(_ notification: Notification) {
+    @objc func handlePurchaseNotification(_ notification: Notification) {
         segueToPremium()
     }
     

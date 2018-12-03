@@ -25,15 +25,18 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
     var bannerView: GADBannerView!
     var handicaps = [String: Int]()
     var players = [String]()
-    var valueFromPlayerBook : [(String, Int)]?
+    var valueFromPlayerBook : [Player]?
     var clicked = [Int]()
+    
+    //todo: consolidate so logic only uses this map instead of handicaps and players
+    var playerMap = [String: Player]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Enter Players"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.layer.borderWidth = 0.5
-        tableView.layer.borderColor = UIColor.black.cgColor
+        tableView.layer.borderColor = UIColor.gray.cgColor
         
         
     }
@@ -48,7 +51,7 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         
         if let playersToAdd = valueFromPlayerBook {
             for player in playersToAdd {
-                insertNewPerson(name: player.0, handicap: player.1)
+                insertNewPerson(player: player)
             }
         }
         valueFromPlayerBook = nil
@@ -70,20 +73,21 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         }
         
         if let name = NameTextField.text, let handicap = Int(HandicapTextField.text!) {
-            insertNewPerson(name: name, handicap: handicap)
+            insertNewPerson(player: Player(name: name, flight: nil, phoneNumber: nil, handicap: Int16(handicap)))
         } else {
             createAlert(title: "Error", message: "Invalid input.")
         }
     }
     
-    func insertNewPerson(name: String, handicap: Int) {
-        if (handicaps[name] != nil) {
+    func insertNewPerson(player: Player) {
+        if (handicaps[player.name] != nil) {
             createAlert(title: "Error", message: "Name already exists.")
             return
         }
         
-        players.append(name)
-        handicaps[name] = handicap
+        players.append(player.name)
+        handicaps[player.name] = Int(player.handicap)
+        playerMap[player.name] = player
         
         let indexPath = IndexPath(row: players.count - 1, section: 0)
         
@@ -119,7 +123,7 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
             handicaps.removeValue(forKey: players[indexPath.row])
@@ -164,18 +168,24 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         }
         
         var teams : [[(String, Int)]]
+        var genType: String
         if TeamTypeControl.selectedSegmentIndex == 0 {
+            genType = "Fairest"
             teams = TeamsHelper.generateFairestTeams(handicaps: handicaps, unsortedPlayers: players, teamSize: teamSize)
         }
         else if TeamTypeControl.selectedSegmentIndex == 1 {
+            genType = "Flight"
             teams = TeamsHelper.generateFlightTeams(handicaps: handicaps, unsortedPlayers: players, teamSize: teamSize)
         } else {
+            genType = "Random"
             teams = TeamsHelper.generateRandomTeams(handicaps: handicaps, origPlayers: players, teamSize: teamSize)
         }
         
         let svc = storyboard?.instantiateViewController(withIdentifier: "PremiumTeamsViewController") as! PremiumTeamsViewController
         svc.teams = teams
         svc.averageHandicaps = calculateAverageHandicaps(teams: teams)
+        svc.genType = genType
+        svc.players = playerMap
         navigationController?.pushViewController(svc, animated: true)
     }
     
@@ -224,7 +234,7 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
             //getting the input values from user
             if let name = alertController.textFields?[0].text, let phoneNumber = alertController.textFields?[1].text, let handicap = Int((alertController.textFields?[2].text)!), let flight = alertController.textFields?[3].text {
                 self.saveToDB(name: name, phoneNumber: phoneNumber, handicap: handicap, flight: flight)
-                self.insertNewPerson(name: name, handicap: handicap)
+                self.insertNewPerson(player: Player(name: name, flight: flight, phoneNumber: phoneNumber, handicap: Int16(handicap)))
             } else {
                 self.createAlert(title: "Error", message: "Invalid input.")
             }
@@ -265,9 +275,9 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func addNewPlayerFromBook(player: (String, Int)) {
+    func addNewPlayerFromBook(player: Player) {
         if valueFromPlayerBook == nil {
-            valueFromPlayerBook = [(String, Int)]()
+            valueFromPlayerBook = [Player]()
         }
         self.valueFromPlayerBook!.append(player)
     }

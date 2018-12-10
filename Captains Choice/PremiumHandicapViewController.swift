@@ -37,8 +37,6 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.layer.borderWidth = 0.5
         tableView.layer.borderColor = UIColor.gray.cgColor
-        
-        
     }
     
     override func didReceiveMemoryWarning() {

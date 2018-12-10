@@ -27,13 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         var initialViewController: UINavigationController
-        //if PremiumProduct.store.isProductPurchased(premiumIdentifier) {
+        if PremiumProduct.store.isProductPurchased(premiumIdentifier) {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: "PremiumNavigationController") as! UINavigationController
-//        }
-//        else {
-//            initialViewController = mainStoryboard.instantiateViewController(withIdentifier: "FreeNavigationController") as! UINavigationController
-//        }
-        
+        }
+        else {
+            initialViewController = mainStoryboard.instantiateViewController(withIdentifier: "FreeNavigationController") as! UINavigationController
+        }
+    
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         

@@ -27,6 +27,9 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     let premiumIdentifier = "com.malatras.CaptainsChoice.premium"
     typealias FinishedPurchase = () -> ()
     
+    //todo: consolidate so logic only uses this map instead of handicaps and players
+    var playerMap = [String: Player]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Enter Players"
@@ -75,10 +78,6 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func AddButton(_ sender: Any) {
-        insertNewPerson()
-    }
-    
-    func insertNewPerson() {
         if NameTextField.text!.isEmpty && HandicapTextField.text!.isEmpty {
             createAlert(title: "Error", message: "Please enter a name and handicap.")
             return
@@ -93,13 +92,22 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
         
-        if (handicaps[NameTextField.text!] != nil) {
+        if let name = NameTextField.text, let handicap = Int(HandicapTextField.text!) {
+            insertNewPerson(player: Player(name: name, flight: nil, phoneNumber: nil, handicap: Int16(handicap)))
+        } else {
+            createAlert(title: "Error", message: "Invalid input.")
+        }
+    }
+    
+    func insertNewPerson(player: Player) {
+        if (handicaps[player.name] != nil) {
             createAlert(title: "Error", message: "Name already exists.")
             return
         }
         
-        players.append(NameTextField.text!)
-        handicaps[NameTextField.text!] = Int(HandicapTextField.text!)!
+        players.append(player.name)
+        handicaps[player.name] = Int(player.handicap)
+        playerMap[player.name] = player
         
         let indexPath = IndexPath(row: players.count - 1, section: 0)
         
@@ -193,6 +201,7 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         svc.teams = teams
         svc.averageHandicaps = calculateAverageHandicaps(teams: teams)
         svc.genType = genType
+        svc.players = playerMap
         navigationController?.pushViewController(svc, animated: true)
     }
     

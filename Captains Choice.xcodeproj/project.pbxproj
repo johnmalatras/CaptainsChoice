@@ -189,6 +189,7 @@
 				5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */,
 				52BB20EF20C8764300A33C5D /* PremiumHandicapViewController.swift */,
 				5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */,
+				525E12DF20CB82CD00F217D1 /* PremiumTeamsViewController.swift */,
 				52170E9420B07E7700059C9C /* PersonTableViewCell.swift */,
 				52170E9620B08D7500059C9C /* TeamsHelper.swift */,
 				52170E9820B08EDC00059C9C /* CustomSort.swift */,
@@ -197,7 +198,6 @@
 				52D52F6E20CB149500130E80 /* PlayerBookViewController.swift */,
 				52D52F7020CB1B6200130E80 /* PlayerBookCell.swift */,
 				525E12DD20CB5C8900F217D1 /* HeaderCell.swift */,
-				525E12DF20CB82CD00F217D1 /* PremiumTeamsViewController.swift */,
 				52A7ADC421A0ADFD00F33532 /* Player.swift */,
 			);
 			path = "Captains Choice";

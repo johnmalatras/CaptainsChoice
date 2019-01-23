@@ -14,7 +14,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet weak var tableView: UITableView!
     
-    var players: [(String, Int)] = []
+    var players: [Player] = []
     var clicked = [Int]()
     var delegate : PremiumHandicapViewController?
     
@@ -30,8 +30,37 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewWillDisappear(_ animated : Bool) {
         super.viewWillDisappear(animated)
         
-        if self.isMovingFromParentViewController {
+        if self.isMovingFromParent {
             delegate?.clicked = clicked
+        }
+    }
+    
+    func updatePlayerData(player: Player, newName: String, newHandicap: Int, newFlight: String, newPhone: String) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Players")
+        fetchRequest.predicate = NSPredicate(format: "name = %@", player.name)
+        do
+        {
+            let res = try context.fetch(fetchRequest)
+            
+            let objectUpdate = res[0] as! NSManagedObject
+            objectUpdate.setValue(newName, forKey: "name")
+            objectUpdate.setValue(newPhone, forKey: "phone")
+            objectUpdate.setValue(newHandicap, forKey: "handicap")
+            objectUpdate.setValue(newFlight, forKey: "flight")
+            do{
+                try context.save()
+            }
+            catch
+            {
+                print(error)
+            }
+        }
+        catch
+        {
+            print(error)
         }
     }
     
@@ -44,7 +73,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
             let result = try context.fetch(request)
             players.removeAll()
             for data in result as! [NSManagedObject] {
-                players.append((data.value(forKey: "name") as! String, data.value(forKey: "handicap") as! Int))
+                players.append(Player(name: data.value(forKey: "name") as! String, flight: data.value(forKey: "flight") as? String, phoneNumber: data.value(forKey: "phone") as? String, handicap: Int16(data.value(forKey: "handicap") as! Int)))
             }
             
         } catch {
@@ -64,8 +93,8 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerBookCell", for: indexPath) as! PlayerBookCell
         cell.selectionStyle = .none
-        cell.NameLabel.text = players[indexPath.row].0
-        cell.HandicapLabel.text = String(players[indexPath.row].1)
+        cell.NameLabel.text = players[indexPath.row].name
+        cell.HandicapLabel.text = String(players[indexPath.row].handicap)
         cell.AddButton.isEnabled = true
         if clicked.contains(indexPath.row) {
             cell.AddButton.isEnabled = false
@@ -73,11 +102,97 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         cell.AddButton.tag = indexPath.row
         cell.AddButton.addTarget(self, action: #selector(PlayerBookViewController.addPlayerToCurrent(sender:)), for: .touchUpInside)
+        cell.EditButton.tag = indexPath.row
+        cell.EditButton.addTarget(self, action: #selector(PlayerBookViewController.editPlayer(sender:)), for: .touchUpInside)
         return cell
     }
     
-    func addPlayerToCurrent(sender: UIButton) {
-        delegate?.addNewPlayerFromBook(player: (players[sender.tag].0, players[sender.tag].1))
+    @objc func editPlayer(sender: UIButton) {
+        let alertController = UIAlertController(title: "Update Player Information", message: "Enter player name, phone number, handicap and flight.", preferredStyle: .alert)
+        
+        let selectedPlayer = players[sender.tag]
+        
+        //the confirm action taking the inputs
+        let confirmAction = UIAlertAction(title: "Enter", style: .default) { (_) in
+            
+            var name: String
+            if alertController.textFields?[0].text != "", let nameInput = alertController.textFields?[0].text {
+                name = nameInput
+            } else {
+                if alertController.textFields?[0].text != nil, alertController.textFields?[0].text != "" {
+                    print("name flag")
+                    self.createAlert(title: "Error", message: "Invalid input.")
+                }
+                name = selectedPlayer.name
+            }
+            
+            var phoneNumber: String
+            if alertController.textFields?[1].text != "", let phoneInput = alertController.textFields?[1].text {
+                phoneNumber = phoneInput
+            } else {
+                if alertController.textFields?[1].text != nil, alertController.textFields?[1].text != "" {
+                    print("phone flag")
+                    self.createAlert(title: "Error", message: "Invalid input.")
+                }
+                phoneNumber = selectedPlayer.phoneNumber!
+            }
+            
+            var handicap: Int
+            if alertController.textFields?[2].text != "", let handicapInput = Int((alertController.textFields?[2].text)!) {
+                handicap = handicapInput
+            } else {
+                if alertController.textFields?[2].text != nil, alertController.textFields?[2].text != "" {
+                    print("handicap flag")
+                    self.createAlert(title: "Error", message: "Invalid input.")
+                }
+                handicap = Int(selectedPlayer.handicap)
+            }
+            
+            var flight: String
+            if alertController.textFields?[3].text != "", let flightInput = alertController.textFields?[3].text {
+                flight = flightInput
+            } else {
+                if alertController.textFields?[3].text != nil, alertController.textFields?[3].text != "" {
+                    print("flight flag")
+                    self.createAlert(title: "Error", message: "Invalid input.")
+                }
+                flight = selectedPlayer.flight!
+            }
+            
+            self.updatePlayerData(player: selectedPlayer, newName: name, newHandicap: handicap, newFlight: flight, newPhone: phoneNumber)
+            self.refreshPlayerData()
+            self.tableView.reloadData()
+        }
+        
+        //the cancel action doing nothing
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        
+        //adding textfields to our dialog box
+        alertController.addTextField { (textField) in
+            textField.placeholder = selectedPlayer.name
+        }
+        alertController.addTextField { (textField) in
+            textField.keyboardType = .numberPad
+            textField.placeholder = selectedPlayer.phoneNumber
+        }
+        alertController.addTextField { (textField) in
+            textField.keyboardType = .numberPad
+            textField.placeholder = "Handicap: " + String(selectedPlayer.handicap)
+        }
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Flight: " + selectedPlayer.flight!
+        }
+        
+        //adding the action to dialogbox
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        //finally presenting the dialog box
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc func addPlayerToCurrent(sender: UIButton) {
+        delegate?.addNewPlayerFromBook(player: players[sender.tag])
         
         clicked.append(sender.tag)
         tableView.reloadData()
@@ -117,7 +232,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func savePlayer() {
+    @objc func savePlayer() {
         let alertController = UIAlertController(title: "Enter Player Information", message: "Enter player name, phone number, handicap and flight.", preferredStyle: .alert)
         
         //the confirm action taking the inputs
@@ -138,6 +253,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         
         //adding textfields to our dialog box
         alertController.addTextField { (textField) in
+            textField.autocapitalizationType = UITextAutocapitalizationType.words
             textField.placeholder = "Name"
         }
         alertController.addTextField { (textField) in
@@ -173,5 +289,5 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
 }
 
 protocol PassPlayerProtocol {
-    func addNewPlayerFromBook(player: (String, Int))
+    func addNewPlayerFromBook(player: Player)
 }

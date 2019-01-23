@@ -13,4 +13,5 @@ class PlayerBookCell: UITableViewCell {
     @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var HandicapLabel: UILabel!
     @IBOutlet weak var AddButton: UIButton!
+    @IBOutlet weak var EditButton: UIButton!
 }

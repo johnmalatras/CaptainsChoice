@@ -17,10 +17,13 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var bannerView: GADBannerView!
     var teams = [[(String, Int)]]()
     var averageHandicaps = [Int]()
+    var genType: String!
+    var players: [String: Player]!
+    typealias FinishedPurchase = () -> ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Result"
+        self.title = genType + " Generation Result"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
                 
         // In this case, we instantiate the banner with desired ad size.
@@ -31,6 +34,15 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(TeamsViewController.handlePurchaseNotification(_:)),
+                                               name: NSNotification.Name(rawValue: IAPHelper.IAPHelperPurchaseNotification),
+                                               object: nil)
+    }
+    
+    @IBAction func BuyPremiumButtonClicked(_ sender: Any) {
+        buyPremium()
     }
     
     @IBAction func ShareButton(_ sender: Any) {
@@ -56,7 +68,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         
-        return message
+        return String(message.dropLast(1))
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {
@@ -109,5 +121,31 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         return cell
     }
     
+    func buyPremium() {
+        PremiumProduct.store.requestProducts{success, products in
+            if success {
+                let product = products![0]
+                PremiumProduct.store.buyProduct(product)
+            }
+        }
+    }
     
+    func segueToPremium() {
+        let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let nav = mainStoryboard.instantiateViewController(withIdentifier: "PremiumNavigationController") as! UINavigationController
+        
+        let svc = storyboard?.instantiateViewController(withIdentifier: "PremiumTeamsViewController") as! PremiumTeamsViewController
+        svc.teams = teams
+        svc.averageHandicaps = averageHandicaps
+        svc.genType = genType
+        svc.players = players
+        nav.pushViewController(svc, animated: true)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = nav
+    }
+    
+    @objc func handlePurchaseNotification(_ notification: Notification) {
+        segueToPremium()
+    }
 }

@@ -68,7 +68,7 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
         
-        return message
+        return String(message.dropLast(1))
     }
     
     func addBannerViewToView(_ bannerView: GADBannerView) {

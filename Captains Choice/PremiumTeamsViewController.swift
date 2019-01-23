@@ -60,8 +60,8 @@ class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITable
                 message += ("\t - " + person.0 + ", " + String(person.1) + "\n")
             }
         }
-        
-        return message
+
+        return String(message.dropLast(1))
     }
     
     override func didReceiveMemoryWarning() {
@@ -94,5 +94,6 @@ class PremiumTeamsViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true)
     }
 }

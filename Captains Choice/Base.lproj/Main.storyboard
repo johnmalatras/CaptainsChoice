@@ -57,7 +57,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fkW-Ra-oZ2">
-                                                    <rect key="frame" x="170.5" y="14" width="42" height="21"/>
+                                                    <rect key="frame" x="166.5" y="14" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -417,7 +417,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IsC-Kt-DD2">
-                                                    <rect key="frame" x="186" y="14" width="42" height="21"/>
+                                                    <rect key="frame" x="166.5" y="14" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -822,7 +822,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z4V-NS-zWk">
-                                <rect key="frame" x="93" y="538" width="189" height="42"/>
+                                <rect key="frame" x="93" y="558" width="189" height="76"/>
                                 <color key="backgroundColor" red="0.79758883250000001" green="0.79758883250000001" blue="0.79758883250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Share">
                                     <color key="titleShadowColor" red="0.79145211859999998" green="0.88203125000000004" blue="0.86734871479999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -842,10 +842,10 @@
                             <constraint firstItem="pK3-ge-bWU" firstAttribute="leading" secondItem="0hv-QA-z28" secondAttribute="leading" id="CeA-U1-e2f"/>
                             <constraint firstItem="z4V-NS-zWk" firstAttribute="leading" secondItem="0hv-QA-z28" secondAttribute="leadingMargin" constant="77" id="Hxn-kh-A3x"/>
                             <constraint firstAttribute="trailing" secondItem="pK3-ge-bWU" secondAttribute="trailing" id="MGE-MY-7IX"/>
-                            <constraint firstItem="z4V-NS-zWk" firstAttribute="top" secondItem="pK3-ge-bWU" secondAttribute="bottom" constant="8" symbolic="YES" id="aIU-Rk-tGA"/>
+                            <constraint firstItem="z4V-NS-zWk" firstAttribute="top" secondItem="pK3-ge-bWU" secondAttribute="bottom" constant="28" id="aIU-Rk-tGA"/>
                             <constraint firstItem="pK3-ge-bWU" firstAttribute="bottom" secondItem="ppj-GO-NR7" secondAttribute="top" constant="-137" id="qOe-ig-AiM"/>
                             <constraint firstItem="z4V-NS-zWk" firstAttribute="centerX" secondItem="pK3-ge-bWU" secondAttribute="centerX" id="uC0-3n-nYI"/>
-                            <constraint firstItem="ppj-GO-NR7" firstAttribute="top" secondItem="z4V-NS-zWk" secondAttribute="bottom" constant="87" id="wIK-5a-5B0"/>
+                            <constraint firstItem="ppj-GO-NR7" firstAttribute="top" secondItem="z4V-NS-zWk" secondAttribute="bottom" constant="33" id="wIK-5a-5B0"/>
                             <constraint firstItem="pK3-ge-bWU" firstAttribute="top" secondItem="0hv-QA-z28" secondAttribute="top" id="zIo-8M-Nhx"/>
                         </constraints>
                     </view>
@@ -856,7 +856,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e89-wx-cGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2017" y="1095"/>
+            <point key="canvasLocation" x="2016.8" y="1094.3028485757122"/>
         </scene>
         <!--Captains Choice-->
         <scene sceneID="bB4-Xc-HS1">
@@ -879,8 +879,11 @@
         <!--View Controller-->
         <scene sceneID="JfQ-dr-UhU">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lXi-Wx-7mx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="20M-eg-vMH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m1D-sb-5Jh"/>
+                        <viewControllerLayoutGuide type="bottom" id="HRs-zQ-2Ak"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="D24-Sw-HdC">
                         <rect key="frame" x="0.0" y="0.0" width="325" height="91"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -926,6 +929,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lXi-Wx-7mx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2688.8000000000002" y="262.21889055472263"/>
         </scene>

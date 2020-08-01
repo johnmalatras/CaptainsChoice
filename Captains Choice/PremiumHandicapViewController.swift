@@ -26,7 +26,7 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
     var handicaps = [String: Int]()
     var players = [String]()
     var valueFromPlayerBook : [Player]?
-    var clicked = [Int]()
+    var clicked = Set<Players>()
     
     //todo: consolidate so logic only uses this map instead of handicaps and players
     var playerMap = [String: Player]()
@@ -37,6 +37,18 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.layer.borderWidth = 0.5
         tableView.layer.borderColor = UIColor.gray.cgColor
+        
+        self.extendedLayoutIncludesOpaqueBars = true
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor(red: 10, green: 129, blue: 22)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 18)!]
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        TeamSizeControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 13)!], for: .normal)
+        TeamTypeControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 13)!], for: .normal)
+        
+        self.HandicapTextField.delegate = self
+        self.NameTextField.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -285,5 +297,12 @@ class PremiumHandicapViewController: UIViewController, UITableViewDelegate, UITa
         playerBookController.delegate = self
         playerBookController.clicked = clicked
         self.navigationController?.pushViewController(playerBookController, animated: true)
+    }
+}
+
+extension PremiumHandicapViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

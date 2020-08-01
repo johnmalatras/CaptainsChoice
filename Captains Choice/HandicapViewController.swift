@@ -37,6 +37,14 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.layer.borderWidth = 0.5
         tableView.layer.borderColor = UIColor.gray.cgColor
         
+        self.extendedLayoutIncludesOpaqueBars = true
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor(red: 10, green: 129, blue: 22)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 18)!]
+        
+        TeamSizeControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 13)!], for: .normal)
+        TeamTypeControl.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 13)!], for: .normal)
+        
         // In this case, we instantiate the banner with desired ad size.
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         addBannerViewToView(bannerView)
@@ -45,6 +53,9 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
         //bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //test ad
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
+        
+        self.HandicapTextField.delegate = self
+        self.NameTextField.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(HandicapViewController.handlePurchaseNotification(_:)),
                                                name: NSNotification.Name(rawValue: IAPHelper.IAPHelperPurchaseNotification),
@@ -75,6 +86,10 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     @IBAction func AddButton(_ sender: Any) {
@@ -241,5 +256,29 @@ class HandicapViewController: UIViewController, UITableViewDelegate, UITableView
     @objc func handlePurchaseNotification(_ notification: Notification) {
         segueToPremium()
     }
+}
+
+extension HandicapViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+extension UIColor {
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
     
+    convenience init(rgb: Int) {
+        self.init(
+            red: (rgb >> 16) & 0xFF,
+            green: (rgb >> 8) & 0xFF,
+            blue: rgb & 0xFF
+        )
+    }
 }

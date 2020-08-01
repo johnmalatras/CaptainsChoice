@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        FIRApp.configure()
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-9379925034367531~5612810809")
+        FirebaseApp.configure()
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         let premiumIdentifier = "com.malatras.CaptainsChoice.premium"
         self.window = UIWindow(frame: UIScreen.main.bounds)

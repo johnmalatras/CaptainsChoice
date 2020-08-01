@@ -14,8 +14,8 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
     
     @IBOutlet weak var tableView: UITableView!
     
-    var players: [Player] = []
-    var clicked = [Int]()
+    var players: [Players] = []
+    var clicked = Set<Players>()
     var delegate : PremiumHandicapViewController?
     
     override func viewDidLoad() {
@@ -23,6 +23,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.title = "Player Book"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Player", style: .done, target: self, action: #selector(savePlayer))
+        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "SFProText-Regular", size: 15)!], for: .normal)
         
         refreshPlayerData()
     }
@@ -35,33 +36,13 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
-    func updatePlayerData(player: Player, newName: String, newHandicap: Int, newFlight: String, newPhone: String) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+    func updatePlayerData(player: Players, newName: String, newHandicap: Int16, newFlight: String, newPhone: String) {
+        player.name = newName
+        player.handicap = newHandicap
+        player.flight = newFlight
+        player.phone = newPhone
         
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Players")
-        fetchRequest.predicate = NSPredicate(format: "name = %@", player.name)
-        do
-        {
-            let res = try context.fetch(fetchRequest)
-            
-            let objectUpdate = res[0] as! NSManagedObject
-            objectUpdate.setValue(newName, forKey: "name")
-            objectUpdate.setValue(newPhone, forKey: "phone")
-            objectUpdate.setValue(newHandicap, forKey: "handicap")
-            objectUpdate.setValue(newFlight, forKey: "flight")
-            do{
-                try context.save()
-            }
-            catch
-            {
-                print(error)
-            }
-        }
-        catch
-        {
-            print(error)
-        }
+        self.refreshPlayerData()
     }
     
     func refreshPlayerData() {
@@ -72,13 +53,29 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         do {
             let result = try context.fetch(request)
             players.removeAll()
-            for data in result as! [NSManagedObject] {
-                players.append(Player(name: data.value(forKey: "name") as! String, flight: data.value(forKey: "flight") as? String, phoneNumber: data.value(forKey: "phone") as? String, handicap: Int16(data.value(forKey: "handicap") as! Int)))
+            for player in result as! [Players] {
+                players.append(player)
             }
             
         } catch {
             print("Failed")
         }
+        
+        self.tableView.reloadData()
+    }
+    
+    func deletePlayer(player: Players) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        context.delete(player)
+        
+        do {
+            try context.save()
+        } catch {
+            createAlert(title: "An error occured", message: "Couldn't delete player")
+        }
+        refreshPlayerData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -90,13 +87,20 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         return players.count
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            deletePlayer(player: players[indexPath.row])
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerBookCell", for: indexPath) as! PlayerBookCell
         cell.selectionStyle = .none
         cell.NameLabel.text = players[indexPath.row].name
         cell.HandicapLabel.text = String(players[indexPath.row].handicap)
         cell.AddButton.isEnabled = true
-        if clicked.contains(indexPath.row) {
+        if clicked.contains(players[indexPath.row]) {
             cell.AddButton.isEnabled = false
             cell.AddButton.backgroundColor = UIColor.gray
         }
@@ -120,10 +124,9 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
                 name = nameInput
             } else {
                 if alertController.textFields?[0].text != nil, alertController.textFields?[0].text != "" {
-                    print("name flag")
                     self.createAlert(title: "Error", message: "Invalid input.")
                 }
-                name = selectedPlayer.name
+                name = selectedPlayer.name!
             }
             
             var phoneNumber: String
@@ -134,18 +137,18 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
                     print("phone flag")
                     self.createAlert(title: "Error", message: "Invalid input.")
                 }
-                phoneNumber = selectedPlayer.phoneNumber!
+                phoneNumber = selectedPlayer.phone!
             }
             
-            var handicap: Int
-            if alertController.textFields?[2].text != "", let handicapInput = Int((alertController.textFields?[2].text)!) {
+            var handicap: Int16
+            if alertController.textFields?[2].text != "", let handicapInput = Int16((alertController.textFields?[2].text)!) {
                 handicap = handicapInput
             } else {
                 if alertController.textFields?[2].text != nil, alertController.textFields?[2].text != "" {
                     print("handicap flag")
                     self.createAlert(title: "Error", message: "Invalid input.")
                 }
-                handicap = Int(selectedPlayer.handicap)
+                handicap = selectedPlayer.handicap
             }
             
             var flight: String
@@ -160,8 +163,6 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             self.updatePlayerData(player: selectedPlayer, newName: name, newHandicap: handicap, newFlight: flight, newPhone: phoneNumber)
-            self.refreshPlayerData()
-            self.tableView.reloadData()
         }
         
         //the cancel action doing nothing
@@ -173,7 +174,7 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         alertController.addTextField { (textField) in
             textField.keyboardType = .numberPad
-            textField.placeholder = selectedPlayer.phoneNumber
+            textField.placeholder = selectedPlayer.phone
         }
         alertController.addTextField { (textField) in
             textField.keyboardType = .numberPad
@@ -192,9 +193,10 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @objc func addPlayerToCurrent(sender: UIButton) {
-        delegate?.addNewPlayerFromBook(player: players[sender.tag])
+        let player = Player(name: players[sender.tag].name!, flight: players[sender.tag].flight, phoneNumber: players[sender.tag].phone, handicap: players[sender.tag].handicap)
+        delegate?.addNewPlayerFromBook(player: player)
         
-        clicked.append(sender.tag)
+        clicked.insert(players[sender.tag])
         tableView.reloadData()
     }
     
@@ -242,7 +244,6 @@ class PlayerBookViewController: UIViewController, UITableViewDelegate, UITableVi
             if let name = alertController.textFields?[0].text, let phoneNumber = alertController.textFields?[1].text, let handicap = Int((alertController.textFields?[2].text)!), let flight = alertController.textFields?[3].text {
                 self.saveToDB(name: name, phoneNumber: phoneNumber, handicap: handicap, flight: flight)
                 self.refreshPlayerData()
-                self.tableView.reloadData()
             } else {
                 self.createAlert(title: "Error", message: "Invalid input.")
             }

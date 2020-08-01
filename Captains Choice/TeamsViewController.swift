@@ -25,7 +25,8 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
         self.title = genType + " Generation Result"
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-                
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
         // In this case, we instantiate the banner with desired ad size.
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         addBannerViewToView(bannerView)
@@ -147,5 +148,11 @@ class TeamsViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @objc func handlePurchaseNotification(_ notification: Notification) {
         segueToPremium()
+    }
+}
+
+extension UIViewController {
+    open override func awakeFromNib() {
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
     }
 }

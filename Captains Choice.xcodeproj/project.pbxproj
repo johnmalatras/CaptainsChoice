@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35CBAFBE2F97FDAC238AC5AB /* libPods-Captains Choice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1332835125C8AE9204690865 /* libPods-Captains Choice.a */; };
+		5201F86E229203BB003F383D /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5201F86D229203BB003F383D /* SF-Pro-Text-Bold.otf */; };
 		52170E9520B07E7700059C9C /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52170E9420B07E7700059C9C /* PersonTableViewCell.swift */; };
 		52170E9720B08D7500059C9C /* TeamsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52170E9620B08D7500059C9C /* TeamsHelper.swift */; };
 		52170E9920B08EDC00059C9C /* CustomSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52170E9820B08EDC00059C9C /* CustomSort.swift */; };
@@ -51,10 +51,12 @@
 		52D52F6C20C8B4F000130E80 /* Captains Choice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 52D52F6A20C8B4F000130E80 /* Captains Choice.xcdatamodeld */; };
 		52D52F6F20CB149500130E80 /* PlayerBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D52F6E20CB149500130E80 /* PlayerBookViewController.swift */; };
 		52D52F7120CB1B6200130E80 /* PlayerBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D52F7020CB1B6200130E80 /* PlayerBookCell.swift */; };
+		52E2FD202291D1A50069613B /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 52E2FD1F2291D1A50069613B /* SF-Pro-Text-Regular.otf */; };
+		6A08789DB37556217CCD76C6 /* Pods_Captains_Choice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D43F275B79B9DF38CEC6D0C /* Pods_Captains_Choice.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1332835125C8AE9204690865 /* libPods-Captains Choice.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Captains Choice.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5201F86D229203BB003F383D /* SF-Pro-Text-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Bold.otf"; sourceTree = "<group>"; };
 		52170E9420B07E7700059C9C /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		52170E9620B08D7500059C9C /* TeamsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsHelper.swift; sourceTree = "<group>"; };
 		52170E9820B08EDC00059C9C /* CustomSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSort.swift; sourceTree = "<group>"; };
@@ -100,6 +102,8 @@
 		52D52F6B20C8B4F000130E80 /* Captains Choice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Captains Choice.xcdatamodel"; sourceTree = "<group>"; };
 		52D52F6E20CB149500130E80 /* PlayerBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerBookViewController.swift; sourceTree = "<group>"; };
 		52D52F7020CB1B6200130E80 /* PlayerBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerBookCell.swift; sourceTree = "<group>"; };
+		52E2FD1F2291D1A50069613B /* SF-Pro-Text-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Regular.otf"; sourceTree = "<group>"; };
+		7D43F275B79B9DF38CEC6D0C /* Pods_Captains_Choice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Captains_Choice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1A523B89D6216F42F3E834A /* Pods-Captains Choice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Captains Choice.release.xcconfig"; path = "Pods/Target Support Files/Pods-Captains Choice/Pods-Captains Choice.release.xcconfig"; sourceTree = "<group>"; };
 		FA4CEA515EE6C11020E47837 /* Pods-Captains Choice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Captains Choice.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Captains Choice/Pods-Captains Choice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,8 +113,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35CBAFBE2F97FDAC238AC5AB /* libPods-Captains Choice.a in Frameworks */,
 				52BB20EA20C862C700A33C5D /* StoreKit.framework in Frameworks */,
+				6A08789DB37556217CCD76C6 /* Pods_Captains_Choice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				52BB20E920C862C700A33C5D /* StoreKit.framework */,
-				1332835125C8AE9204690865 /* libPods-Captains Choice.a */,
+				7D43F275B79B9DF38CEC6D0C /* Pods_Captains_Choice.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -178,27 +182,29 @@
 		5295C8591E4005E200ED05CB /* Captains Choice */ = {
 			isa = PBXGroup;
 			children = (
-				52BB20EB20C862D600A33C5D /* IAPHelper.swift */,
-				525AD08D1E91DC0200CCD51B /* GoogleService-Info.plist */,
+				5201F86D229203BB003F383D /* SF-Pro-Text-Bold.otf */,
+				52E2FD1F2291D1A50069613B /* SF-Pro-Text-Regular.otf */,
 				5295C85A1E4005E200ED05CB /* AppDelegate.swift */,
-				5295C85E1E4005E200ED05CB /* Main.storyboard */,
-				5295C8611E4005E200ED05CB /* Assets.xcassets */,
 				525B65F91E9D752100291BF3 /* AppIcon.appiconset */,
-				5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */,
-				5295C8661E4005E200ED05CB /* Info.plist */,
-				5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */,
-				52BB20EF20C8764300A33C5D /* PremiumHandicapViewController.swift */,
-				5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */,
-				525E12DF20CB82CD00F217D1 /* PremiumTeamsViewController.swift */,
-				52170E9420B07E7700059C9C /* PersonTableViewCell.swift */,
-				52170E9620B08D7500059C9C /* TeamsHelper.swift */,
-				52170E9820B08EDC00059C9C /* CustomSort.swift */,
-				52BB20ED20C8731800A33C5D /* PremiumProduct.swift */,
+				5295C8611E4005E200ED05CB /* Assets.xcassets */,
 				52D52F6A20C8B4F000130E80 /* Captains Choice.xcdatamodeld */,
-				52D52F6E20CB149500130E80 /* PlayerBookViewController.swift */,
-				52D52F7020CB1B6200130E80 /* PlayerBookCell.swift */,
+				52170E9820B08EDC00059C9C /* CustomSort.swift */,
+				525AD08D1E91DC0200CCD51B /* GoogleService-Info.plist */,
+				5295C86F1E401C5D00ED05CB /* HandicapViewController.swift */,
 				525E12DD20CB5C8900F217D1 /* HeaderCell.swift */,
+				52BB20EB20C862D600A33C5D /* IAPHelper.swift */,
+				5295C8661E4005E200ED05CB /* Info.plist */,
+				5295C8631E4005E200ED05CB /* LaunchScreen.storyboard */,
+				5295C85E1E4005E200ED05CB /* Main.storyboard */,
+				52170E9420B07E7700059C9C /* PersonTableViewCell.swift */,
 				52A7ADC421A0ADFD00F33532 /* Player.swift */,
+				52D52F7020CB1B6200130E80 /* PlayerBookCell.swift */,
+				52D52F6E20CB149500130E80 /* PlayerBookViewController.swift */,
+				52BB20EF20C8764300A33C5D /* PremiumHandicapViewController.swift */,
+				52BB20ED20C8731800A33C5D /* PremiumProduct.swift */,
+				525E12DF20CB82CD00F217D1 /* PremiumTeamsViewController.swift */,
+				52170E9620B08D7500059C9C /* TeamsHelper.swift */,
+				5280F2271E4183D600F8FBB3 /* TeamsViewController.swift */,
 			);
 			path = "Captains Choice";
 			sourceTree = "<group>";
@@ -223,6 +229,8 @@
 				5295C8531E4005E200ED05CB /* Sources */,
 				5295C8541E4005E200ED05CB /* Frameworks */,
 				5295C8551E4005E200ED05CB /* Resources */,
+				F1274F67E5160380BFB3E808 /* [CP] Embed Pods Frameworks */,
+				5201F86F229212A3003F383D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -261,6 +269,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -285,6 +294,8 @@
 				525B661D1E9D752100291BF3 /* Icon-App-60x60@1x.png in Resources */,
 				525B66251E9D752100291BF3 /* Icon-App-83.5x83.5@2x.png in Resources */,
 				525B66111E9D752100291BF3 /* Contents.json in Resources */,
+				52E2FD202291D1A50069613B /* SF-Pro-Text-Regular.otf in Resources */,
+				5201F86E229203BB003F383D /* SF-Pro-Text-Bold.otf in Resources */,
 				525B661B1E9D752100291BF3 /* Icon-App-57x57@1x.png in Resources */,
 				525B66131E9D752100291BF3 /* Icon-App-20x20@2x.png in Resources */,
 				5295C8651E4005E200ED05CB /* LaunchScreen.storyboard in Resources */,
@@ -328,6 +339,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5201F86F229212A3003F383D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+		};
+		F1274F67E5160380BFB3E808 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Captains Choice/Pods-Captains Choice-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Captains Choice/Pods-Captains Choice-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -473,6 +526,7 @@
 			baseConfigurationReference = FA4CEA515EE6C11020E47837 /* Pods-Captains Choice.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = UQ5A7GXJP2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
